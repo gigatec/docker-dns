@@ -1,0 +1,7 @@
+web:
+  image: gigatec/docker-dns
+  container_name: gigatec-dns
+  volumes:
+    - /var/run/docker.sock:/docker.sock
+  expose:
+    - 53

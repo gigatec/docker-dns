@@ -17,8 +17,7 @@ Run some containers:
 
 Start up dockerdns:
 
-    % docker run --name dns -v /var/run/docker.sock:/docker.sock phensley/docker-dns \
-        --domain example.com
+    % docker run -d --name dns --expose 53 -v /var/run/docker.sock:/docker.sock gigatec/docker-dns
 
 Start more containers:
 

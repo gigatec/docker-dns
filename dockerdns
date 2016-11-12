@@ -93,6 +93,8 @@ class NameTable(object):
         if key:
             with self._lock:
                 res = self._storage.get(key)
+                if not res:
+                    res = self._storage.get(key[1:])
                 log('table.get %s == %s', name, res)
                 return res
 
@@ -120,7 +122,7 @@ class NameTable(object):
 
     def _key(self, name):
         try:
-            return DNSLabel(name.lower()).label
+            return DNSLabel(name.replace('_', '.').lower()).label
         except Exception:
             return None
 
@@ -284,7 +286,7 @@ def parse_args():
         help='Url to docker TCP/UNIX socket')
     parser.add_argument('--dns-bind', default=DNS_BINDADDR,
         help='Bind address for DNS server')
-    parser.add_argument('--domain', default='docker',
+    parser.add_argument('--domain', default='',
         help='Base domain name for registered services')
     parser.add_argument('--resolver', default=DNS_RESOLVER, nargs='*',
         help='Servers for recursive DNS resolution')
